@@ -7,6 +7,9 @@ import 'package:banger/routes.dart';
 
 import 'package:banger/theme.dart';
 
+import 'package:provider/provider.dart';
+import 'package:banger/services/services.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(App());
@@ -47,9 +50,13 @@ class _AppState extends State<App> {
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
           print("her1e");
-          return MaterialApp(
-            routes: appRoutes,
-            theme: appTheme,
+          return StreamProvider(
+            create: (_) => FirestoreService().streamReport(),
+            initialData: Report(),
+            child: MaterialApp(
+              routes: appRoutes,
+              theme: appTheme,
+            ),
           );
         }
 
